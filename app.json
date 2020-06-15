@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ventas-multi",
-    "slug": "ventas-multi",
+    "name": "ventas",
+    "slug": "ventas",
     "platforms": [
       "ios",
       "android",
@@ -23,6 +23,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": ""
   }
 }
