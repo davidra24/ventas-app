@@ -1,8 +1,13 @@
-import React, { useEffect } from "react";
-import Navigation from "./src/routes";
-import { firebaseApp } from "./src/utils/firebase";
+import React from 'react';
+import { YellowBox } from 'react-native';
+import Navigation from './src/routes';
+import { firebaseApp } from './src/utils/firebase';
 
-export default function App() {
+YellowBox.ignoreWarnings(['Setting a timer']);
+
+const App = () => {
   firebaseApp();
   return <Navigation />;
 }
+
+export default App

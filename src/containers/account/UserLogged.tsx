@@ -1,36 +1,48 @@
-import React, { useRef, useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
-import Toast from "react-native-easy-toast";
-import { Loading } from "../../components/loading";
-import * as firebase from "firebase";
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Button } from 'react-native-elements';
+import Toast from 'react-native-easy-toast';
+import { Loading } from '../../components/loading';
+import * as firebase from 'firebase';
 import {
   GREY_BACKGROUND,
   WHITE_COLOR,
   GREY_COLOR,
   CORPORATIVE_COLOR,
-} from "../../utils/constants";
-import { InfoUser } from "../../components/account/InfoUser";
+} from '../../utils/constants';
+import { InfoUser } from '../../components/account/InfoUser';
 
 export const UserLogged = () => {
+  const [userInfo, setUserInfo] = useState<any>(null);
   const toastRef = useRef();
   const [loading, setLoading] = useState<boolean>(false);
-  const [loadingText, setLoadingText] = useState<string>("");
+  const [loadingText, setLoadingText] = useState<string>('');
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    (() => {
+      const user = firebase.auth().currentUser;
+      setUserInfo(user);
+    })();
+  }, []);
 
   return (
     <View style={styles.viewUserInfo}>
-      <InfoUser />
+      {userInfo && (
+        <InfoUser
+          userInfo={userInfo}
+          toast={toastRef}
+          setLoading={setLoading}
+        />
+      )}
       <Text>Account Options</Text>
       <Button
-        title="Cerrar Sesión"
+        title='Cerrar Sesión'
         onPress={() => firebase.auth().signOut()}
         containerStyle={styles.btnLogOutContainer}
         buttonStyle={styles.btnLogOut}
         titleStyle={styles.btnLogOutText}
       />
-      <Toast ref={toastRef} position="center" opacity={0.9} />
+      <Toast ref={toastRef} position='center' opacity={0.9} />
       <Loading isVisible={loading} text={loadingText} />
     </View>
   );
@@ -38,7 +50,7 @@ export const UserLogged = () => {
 
 const styles = StyleSheet.create({
   viewUserInfo: {
-    minHeight: "100%",
+    minHeight: '100%',
     backgroundColor: GREY_BACKGROUND,
   },
   btnLogOut: {
@@ -56,6 +68,6 @@ const styles = StyleSheet.create({
     color: CORPORATIVE_COLOR,
   },
   btnLogOutContainer: {
-    alignItems: "center",
+    alignItems: 'center',
   },
 });
